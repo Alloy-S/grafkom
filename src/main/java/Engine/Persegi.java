@@ -19,6 +19,13 @@ public class Persegi extends Object2d{
         setupVAOVBO();
     }
 
+    public void update(Vector3f center) {
+        this.center = center;
+        createPersegi();
+        setupVAOVBO();
+
+    }
+
     public void createPersegi() {
         //vertices -> clear
         vertices.clear();

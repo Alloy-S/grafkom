@@ -36,6 +36,8 @@ public class Object2d extends ShaderProgram {
         setupVAOVBOWithVerticesColor();
     }
 
+
+
     public void setupVAOVBO() {
         this.vao = glGenVertexArrays();
         glBindVertexArray(vao);
@@ -85,6 +87,36 @@ public class Object2d extends ShaderProgram {
         glLineWidth(1);
         glPointSize(0);
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+    }
+
+    public void drawLine() {
+        drawSetup();
+        // draw the vertices
+        glLineWidth(5);
+        glPointSize(0);
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+    }
+
+    public void addVertices(Vector3f newVector) {
+        vertices.add(newVector);
+        setupVAOVBO();
+    }
+
+    public void update(int index, Vector3f pos) {
+        vertices.set(index, pos);
+        setupVAOVBO();
+    }
+
+    public int getVerticesSize() {
+        return vertices.size();
+    }
+
+    public Vector3f getPos(int index) {
+        return vertices.get(index);
+    }
+
+    public List<Vector3f> getVertices() {
+        return vertices;
     }
 
     public void drawWithVerticesColor() {

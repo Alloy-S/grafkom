@@ -18,6 +18,7 @@ public class Window {
     private boolean open=  true;
     private int width, height;
     private String title;
+    private MouseInput mouseInput;
 
 
     public Window(int width, int height, String title){
@@ -98,11 +99,13 @@ public class Window {
         // Make the window visible
         glfwShowWindow(window);
 
+        mouseInput = new MouseInput(window);
     }
 
     public void update(){
 
         // Set the clear color
+
 
         glfwSwapBuffers(window); // swap the color buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
@@ -111,6 +114,7 @@ public class Window {
         if(glfwWindowShouldClose(window))
             open = false;
 
+        mouseInput.input();
     }
 
     public void cleanup(){
@@ -121,6 +125,10 @@ public class Window {
 
     public boolean isKeyPressed(int keyCode) {
         return glfwGetKey(window, keyCode) == GLFW_PRESS;
+    }
+
+    public MouseInput getMouseInput() {
+        return mouseInput;
     }
 
 

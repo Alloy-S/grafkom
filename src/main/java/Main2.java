@@ -7,12 +7,13 @@ import org.lwjgl.opengl.GL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.JarOutputStream;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL30.*;
 
-public class Main {
+public class Main2 {
     private Window window = new Window(800, 800, "Hello World");
     ArrayList<Object2d> objects = new ArrayList<>();
     ArrayList<Rectangle> objectsRectangle = new ArrayList<>();
@@ -23,6 +24,8 @@ public class Main {
     ArrayList<Object2d> objectsPointControl = new ArrayList<>();
 
     private boolean leftBottonMouse = false;
+    private boolean edit = false;
+    private int result;
 
     public void init() {
         window.init();
@@ -281,6 +284,22 @@ public class Main {
                 30.0f
         ));
 
+        objectsPointControl.add(new Object2d(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ), new ArrayList<>(),
+                new Vector4f(0.610f, 0.189f, 0.0610f, 1.0f)
+        ));
+
+        objectsPointControl.add(new Object2d(
+                Arrays.asList(
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                ), new ArrayList<>(),
+                new Vector4f(0.0f, 0.0f, 0.0f, 1.0f)
+        ));
+
 //        persegi menggunakan lingkaran
 //        objectPersegi.add(new Persegi(
 //                Arrays.asList(
@@ -308,80 +327,139 @@ public class Main {
 //        ));
 
 
-
-        //cerobong atas
-        objectsRectangle.add(new Rectangle(
-                Arrays.asList(
-                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                ), new ArrayList<>(
-                List.of(
-                        new Vector3f(0.37f, 0.35f, 0.0f),
-                        new Vector3f(0.5f, 0.35f, 0.0f),
-                        new Vector3f(0.37f, 0.38f, 0.0f),
-                        new Vector3f(0.5f, 0.38f, 0.0f)
-                )
-        ),
-                new Vector4f(0.610f, 0.189f, 0.0610f, 1.0f),
-                Arrays.asList(0, 1, 2, 1, 2, 3)
-        ));
-
-//        objectsPointControl.add(new Object2d(
+//        //cerobong atas
+//        objectsRectangle.add(new Rectangle(
 //                Arrays.asList(
 //                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
 //                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-//                ), new ArrayList<>(),
-//                new Vector4f(0.610f, 0.189f, 0.0610f, 1.0f)
+//                ), new ArrayList<>(
+//                List.of(
+//                        new Vector3f(0.37f, 0.35f, 0.0f),
+//                        new Vector3f(0.5f, 0.35f, 0.0f),
+//                        new Vector3f(0.37f, 0.38f, 0.0f),
+//                        new Vector3f(0.5f, 0.38f, 0.0f)
+//                )
+//        ),
+//                new Vector4f(0.610f, 0.189f, 0.0610f, 1.0f),
+//                Arrays.asList(0, 1, 2, 1, 2, 3)
 //        ));
+
+
 //        bintang
 
 
     }
 
-//    public void input() {
-//        if (window.isKeyPressed(GLFW_KEY_W)) {
-//            System.out.println("W");
-//        }
-//
-//        if (window.getMouseInput().isLeftButtonPressed()) {
-//
-//            Vector2f pos = window.getMouseInput().getCurrentPos();
-//
-//            pos.x = (pos.x - (window.getWidth()) / 2.0f) / (window.getWidth() / 2.0f);
-//            pos.y = (pos.y - (window.getHeight()) / 2.0f) / (-window.getHeight() / 2.0f);
-//
-//            if ((!(pos.x > 1 || pos.x < -0.97) && !(pos.y > 0.97 || pos.y < -1)) && !leftBottonMouse) {
-//                leftBottonMouse = true;
-//                System.out.println("x: " + pos.x + " y: " + pos.y);
-////                garis
-//                objectsPointControl.get(0).addVertices(new Vector3f(pos.x, pos.y, 0));
-////                persegi
-//                objectPersegi.add(new Persegi(
-//                        Arrays.asList(
-//                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-//                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-//                        ), new ArrayList<>(
-//                        List.of()
-//                ),
-//                        new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
-//                        new Vector3f(pos.x, pos.y, 0.0f),
-//                        new Vector3f(0.1f, 0.1f, 0.00f)
-//                ));
-//            }
-//
-//        }
-//
-//        if (window.getMouseInput().isLeftButtonRelease()) {
-//            leftBottonMouse = false;
-//        }
-//    }
+    public void input() {
+        if (window.isKeyPressed(GLFW_KEY_W)) {
+            System.out.println("W");
+        }
+
+        if (window.getMouseInput().isLeftButtonPressed()) {
+
+            Vector2f pos = window.getMouseInput().getCurrentPos();
+
+            pos.x = (pos.x - (window.getWidth()) / 2.0f) / (window.getWidth() / 2.0f);
+            pos.y = (pos.y - (window.getHeight()) / 2.0f) / (-window.getHeight() / 2.0f);
+
+            if ((!(pos.x > 1 || pos.x < -0.97) && !(pos.y > 0.97 || pos.y < -1)) && !leftBottonMouse) {
+                if (!edit) {
+                    result = checkCollision(objectsPointControl.get(0), pos);
+                    if (result == -1) {
+
+                        leftBottonMouse = true;
+                        System.out.println("x: " + pos.x + " y: " + pos.y);
+//                garis
+                        objectsPointControl.get(0).addVertices(new Vector3f(pos.x, pos.y, 0));
+//                persegi
+                        objectPersegi.add(new Persegi(
+                                Arrays.asList(
+                                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                                ), new ArrayList<>(
+                                List.of()
+                        ),
+                                new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
+                                new Vector3f(pos.x, pos.y, 0.0f),
+                                new Vector3f(0.1f, 0.1f, 0.00f)
+                        ));
+
+                        curve(objectsPointControl.get(0), objectsPointControl.get(1));
+
+                    } else {
+                        edit = true;
+                    }
+                } else {
+//                    System.out.println(result);
+//                    System.out.println("edit mode");
+//                    if (checkCollision(objectsPointControl.get(0), pos) == -1) {
+                        objectPersegi.get(result).update(new Vector3f(pos.x, pos.y, 0.0f));
+                        objectsPointControl.get(0).update(result, new Vector3f(pos.x, pos.y, 0.0f));
+                        curve(objectsPointControl.get(0), objectsPointControl.get(1));
+//                    }
+//                    objectsPointControl.get(0).getVertices().set(result, );
+                }
+            }
+
+        }
+
+        if (window.getMouseInput().isLeftButtonRelease()) {
+            leftBottonMouse = false;
+            edit = false;
+            result = -1;
+        }
+    }
+
+    public int checkCollision(Object2d object2d, Vector2f newPos) {
+        for (int i = 0; i < object2d.getVerticesSize(); i++) {
+            Vector3f pos = object2d.getPos(i);
+            float jarak = (float) Math.sqrt((Math.pow(newPos.x - pos.x, 2) + (Math.pow(newPos.y - pos.y, 2))));
+            if (jarak < 0.17) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void curve(Object2d object2d, Object2d newObjects) {
+        float x, y;
+        newObjects.getVertices().clear();
+        int n = object2d.getVerticesSize() - 1;
+        for (float t = 0; t <= 1; t += 0.01) {
+            x = 0;
+            y = 0;
+            int count = object2d.getVerticesSize() - 1;
+
+            for (int i = 0; i < object2d.getVerticesSize(); i++) {
+                Vector3f pos = object2d.getPos(i);
+                float z = (float) (Math.pow((1 - t), count) * Math.pow(t, i)) * combi(n,i);
+                x += (z * pos.x);
+                y += (z * pos.y);
+                count--;
+            }
+            newObjects.addVertices(new Vector3f(x, y, 0.0f));
+        }
+    }
+
+    public int combi(int n, int r) {
+        return faktorial(n) / (faktorial(n - r) * faktorial(r));
+    }
+
+    public int faktorial(int angka)
+    {
+        if (angka == 0 || angka == 1) {
+            return 1;
+        } else {
+            return angka * faktorial(angka - 1);
+        }
+    }
 
     public void loop() {
         while (window.isOpen()) {
             window.update();
             glClearColor(0.407f, 0.464f, 0.690f, 1.0f);
             GL.createCapabilities();
-//            input();
+            input();
 
             // code here
             for (Object2d object : objects) {
@@ -434,6 +512,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        new Main().run();
+        new Main2().run();
     }
 }
