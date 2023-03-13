@@ -1,5 +1,5 @@
 import Engine.*;
-import org.joml.Vector2f;
+import Engine.Object;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
@@ -14,13 +14,13 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class Main {
     private Window window = new Window(800, 800, "Hello World");
-    ArrayList<Object2d> objects = new ArrayList<>();
+    ArrayList<Object> objects = new ArrayList<>();
     ArrayList<Rectangle> objectsRectangle = new ArrayList<>();
     ArrayList<Circle> objectsCircle = new ArrayList<>();
     ArrayList<Star> objectsStar = new ArrayList<>();
     ArrayList<Persegi> objectPersegi = new ArrayList<>();
     ArrayList<Triangle> objectsTriangle = new ArrayList<>();
-    ArrayList<Object2d> objectsPointControl = new ArrayList<>();
+    ArrayList<Object> objectsPointControl = new ArrayList<>();
 
     private boolean leftBottonMouse = false;
 
@@ -384,7 +384,7 @@ public class Main {
 //            input();
 
             // code here
-            for (Object2d object : objects) {
+            for (Object object : objects) {
                 object.draw();
             }
 
@@ -408,7 +408,7 @@ public class Main {
                 object.draw();
             }
 
-            for (Object2d object : objectsPointControl) {
+            for (Object object : objectsPointControl) {
                 object.drawLine();
             }
 

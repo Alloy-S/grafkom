@@ -6,9 +6,8 @@ import org.joml.Vector4f;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
-public class Circle extends Object2d{
+public class Circle extends Object {
     Vector3f center, radius;
 
     public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f center, Vector3f radius) {

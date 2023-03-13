@@ -8,7 +8,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLE_FAN;
 
-public class Persegi extends Object2d{
+public class Persegi extends Object {
     Vector3f center, radius;
 
     public Persegi(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f center, Vector3f radius) {

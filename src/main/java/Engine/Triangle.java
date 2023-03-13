@@ -8,7 +8,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLE_FAN;
 
-public class Triangle extends Object2d {
+public class Triangle extends Object {
     Vector3f center, radius;
 
     public Triangle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f center, Vector3f radius) {

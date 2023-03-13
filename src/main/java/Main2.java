@@ -1,4 +1,5 @@
 import Engine.*;
+import Engine.Object;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -7,7 +8,6 @@ import org.lwjgl.opengl.GL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.jar.JarOutputStream;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glClearColor;
@@ -15,13 +15,13 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class Main2 {
     private Window window = new Window(800, 800, "Hello World");
-    ArrayList<Object2d> objects = new ArrayList<>();
+    ArrayList<Object> objects = new ArrayList<>();
     ArrayList<Rectangle> objectsRectangle = new ArrayList<>();
     ArrayList<Circle> objectsCircle = new ArrayList<>();
     ArrayList<Star> objectsStar = new ArrayList<>();
     ArrayList<Persegi> objectPersegi = new ArrayList<>();
     ArrayList<Triangle> objectsTriangle = new ArrayList<>();
-    ArrayList<Object2d> objectsPointControl = new ArrayList<>();
+    ArrayList<Object> objectsPointControl = new ArrayList<>();
 
     private boolean leftBottonMouse = false;
     private boolean edit = false;
@@ -284,7 +284,7 @@ public class Main2 {
                 30.0f
         ));
 
-        objectsPointControl.add(new Object2d(
+        objectsPointControl.add(new Object(
                 Arrays.asList(
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
@@ -292,7 +292,7 @@ public class Main2 {
                 new Vector4f(0.610f, 0.189f, 0.0610f, 1.0f)
         ));
 
-        objectsPointControl.add(new Object2d(
+        objectsPointControl.add(new Object(
                 Arrays.asList(
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
                         new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
@@ -410,7 +410,7 @@ public class Main2 {
         }
     }
 
-    public int checkCollision(Object2d object2d, Vector2f newPos) {
+    public int checkCollision(Object object2d, Vector2f newPos) {
         for (int i = 0; i < object2d.getVerticesSize(); i++) {
             Vector3f pos = object2d.getPos(i);
             float jarak = (float) Math.sqrt((Math.pow(newPos.x - pos.x, 2) + (Math.pow(newPos.y - pos.y, 2))));
@@ -421,7 +421,7 @@ public class Main2 {
         return -1;
     }
 
-    public void curve(Object2d object2d, Object2d newObjects) {
+    public void curve(Object object2d, Object newObjects) {
         float x, y;
         newObjects.getVertices().clear();
         int n = object2d.getVerticesSize() - 1;
@@ -462,7 +462,7 @@ public class Main2 {
             input();
 
             // code here
-            for (Object2d object : objects) {
+            for (Object object : objects) {
                 object.draw();
             }
 
@@ -486,7 +486,7 @@ public class Main2 {
                 object.draw();
             }
 
-            for (Object2d object : objectsPointControl) {
+            for (Object object : objectsPointControl) {
                 object.drawLine();
             }
 

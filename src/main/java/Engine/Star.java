@@ -6,9 +6,8 @@ import org.joml.Vector4f;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
-public class Star extends Object2d {
+public class Star extends Object {
     Vector3f center, radius;
 
     public Star(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, Vector3f center, Vector3f radius, float rotate) {
